@@ -25,3 +25,17 @@ const greatestLetter2 = (arr) => {
 
 }
 greatestLetter2(exampleArray) // "suyrt"
+
+
+//------------ Solution 3 using recursion --------------------
+
+const greatestLetter3 = (arr, i, str) =>  {
+  i = i || 0;
+  str = str || "";
+  str += arr[i].split("").sort().pop();
+  
+  //base case // recursive case
+  return i === arr.length-1 ? str : greatestLetter(arr, i+1, str);
+
+};
+greatestLetter3(exampleArray) // "suyrt"
