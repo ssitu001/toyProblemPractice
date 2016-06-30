@@ -17,4 +17,3 @@ const binaryToDecimal = n => {
 
 
 
-binaryToDecimal("1000"); //14
