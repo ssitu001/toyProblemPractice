@@ -7,7 +7,7 @@ exactChange.js
 // Return the string "Insufficient Funds" if cash-in-drawer is less than the change due. Return the string "Closed" if cash-in-drawer is equal to the change due.
 
 // Otherwise, return change in coin and bills, sorted in highest to lowest order.
-// var cash = [["PENNY", 1.01],
+// let cash = [["PENNY", 1.01],
 // ["NICKEL", 2.05],
 // ["DIME", 3.10],
 // ["QUARTER", 4.25],
@@ -17,17 +17,17 @@ exactChange.js
 // ["TWENTY", 60.00],
 // ["ONE HUNDRED", 100.00]];
 
-function cashRegValue(arr) {
-  return arr.reduce( (start, subArr) => {
+var cashRegValue =arr => 
+  arr.reduce( (start, subArr) => {
     return start + subArr[1];
   }, 0).toFixed(2); 
-}
 
-function checkCashRegister(price, cash, cid) {
-  var change = cash - price;
-  var drawerValue = Number(cashRegValue(cid));
-  var changeArray = [];
-  var exchange = {
+
+const checkCashRegister = (price, cash, cid) => {
+  let change = +(cash - price).toFixed(2);
+  let drawerValue = Number(cashRegValue(cid));
+  let changeArray = [];
+  let exchange = {
     "PENNY": .01,
     "NICKEL": .05,
     "DIME": .10,
@@ -40,19 +40,19 @@ function checkCashRegister(price, cash, cid) {
   };
   
   if (change > drawerValue) {
-    return "Insufficient Funds"
+    return "Insufficient Funds";
   } else if (change === drawerValue) {
     return "Closed";
   } else {
-    for(var i = cid.length-1; i>= 0; i--) {
+    for(let i = cid.length-1; i>= 0; i--) {
       //console.log("before deduction",cid[i]);
-      var currencyValue = cid[i][0];
-      var fromRegister = cid[i][1];
-      var registerQuanity = Math.floor(change / exchange[currencyValue]);
+      let currencyValue = cid[i][0];
+      let fromRegister = +(cid[i][1]).toFixed(2);
+      let toGive = Math.floor(change / exchange[currencyValue]);
       //console.log("take",take);
-      var amountToDeduct = (registerQuanity * exchange[currencyValue]).toFixed(2);
+      let amountToDeduct = (toGive * exchange[currencyValue]).toFixed(2);
       //console.log("deduct", deduct)
-      if (registerQuanity > 0) {
+      if (toGive > 0) {
         if (fromRegister >= amountToDeduct) {
           changeArray.push([currencyValue, +amountToDeduct]);
           change = (change - amountToDeduct).toFixed(2);
@@ -60,10 +60,15 @@ function checkCashRegister(price, cash, cid) {
           //deduct from register
           fromRegister -= amountToDeduct;
         } else {
-          changeArray.push([currencyValue, +fromRegister]);
-          change = (change - fromRegister).toFixed(2);
-          //zero out from register
-          fromRegister = 0;
+            if (fromRegister === 0) {
+              return "Insufficient Funds";
+            } else {
+              changeArray.push([currencyValue, +fromRegister]);
+              change = (change - fromRegister).toFixed(2);
+            //zero out from register
+              fromRegister = 0;
+            }
+
         }
       }
       //console.log("after deduction", cid[i])
