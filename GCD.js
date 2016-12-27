@@ -15,7 +15,7 @@ const findGCD = (num1, num2) => {
 
   let dividend = Math.max(num1, num2);
   let divisor = Math.min(num1, num2);
-  let quotient = Math.floor(dividend/divisor);
+  //let quotient = Math.floor(dividend/divisor);
   let remainder = dividend % divisor;
   
   return remainder === 0 ? divisor : findGCD(remainder, divisor); 
