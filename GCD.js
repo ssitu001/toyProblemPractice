@@ -23,3 +23,29 @@ const findGCD = (num1, num2) => {
 };
 
 findGCD(108, 30) //6
+
+
+/**
+ * Given two integers, return the greatest common divisor.
+ *
+ * Example:
+ * gcd(10, 8) -> 2
+ * gcd(10, 9) -> 1
+ *
+ */
+
+function gcd(a, b) {
+  
+  let dividend = Math.max(a, b);
+  let divisor = Math.min(a, b);
+  let remainder = dividend % divisor;
+
+  if(remainder === 0) {
+    return divisor;
+  }
+  return gcd(divisor, remainder);
+}
+
+//gcd(10, 8) //-> 2
+//gcd(10, 9) //-> 1
+gcd(108, 30)
