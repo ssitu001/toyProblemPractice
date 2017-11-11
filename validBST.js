@@ -21,23 +21,43 @@
 
 
 //BFS- good when the tree is really deep
-function validBST(tree) {
-  let queue = [tree];
+// function validBST(tree) {
+//   let queue = [tree];
 
-  while (queue.length) {
-    let currentNode = queue.shift();
-    if (currentNode.left) {
-      queue.push(currentNode.left)
-      if (currentNode.left.val > currentNode.val) return false;
+//   while (queue.length) {
+//     let currentNode = queue.shift();
+//     if (currentNode.left) {
+//       queue.push(currentNode.left)
+//       if (currentNode.left.val > currentNode.val) return false;
+//     }
+//     if (currentNode.right) {
+//       queue.push(currentNode.right)
+//       if (currentNode.right && currentNode.right.val < currentNode.val) return false;
+//     }
+//   }
+//   return true;
+// }
+const validBST = (tree, result) => {
+  let curr = tree;
+
+  if (curr === null) return;
+
+  validBST(curr.left, result);
+  
+  result.push(curr.val)
+
+  validBST(curr.right, result);
+
+  let i = 0;
+
+  while (i < result.length-1) {
+    if (result[i+1] < result[i]) {
+      return false;
     }
-    if (currentNode.right) {
-      queue.push(currentNode.right)
-      if (currentNode.right && currentNode.right.val < currentNode.val) return false;
-    }
+    i++;
   }
   return true;
 }
-
 
 function Tree(val) {
   this.val = val;
@@ -46,7 +66,7 @@ function Tree(val) {
 }
 
 var tree1 = new Tree(10);
-tree1 = new Tree(10);
+// tree1 = new Tree(10);
 tree1.left = new Tree(5);
 tree1.left.left = new Tree(3);
 tree1.left.right = new Tree(6);
@@ -61,4 +81,4 @@ tree1.right = new Tree(64);
 
 // tree1.right.right = new Tree(13);
 
-validBST(tree1);
+console.log(validBST(tree1, []));
